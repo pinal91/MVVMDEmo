@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.example.mvvmkotlinexample"
+        applicationId "com.demo.pinal"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -64,5 +64,9 @@ dependencies {
     implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation group: 'com.opencsv', name: 'opencsv', version: '4.1'
+    implementation project(path: ':easy_csv')
+    implementation 'com.itextpdf:itext7-core:7.1.12'
+
 
 }

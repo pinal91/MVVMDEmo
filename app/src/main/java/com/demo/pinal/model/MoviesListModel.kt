@@ -11,7 +11,7 @@ data class ResultsItem(
 
 	val poster_path: String? = null,
 
-	val vote_average: Double? = null,
+	val vote_average: String? = null,
 	val id:String?=null
 
 )

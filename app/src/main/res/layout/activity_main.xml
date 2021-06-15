@@ -36,7 +36,21 @@
                 android:textSize="@dimen/_13sdp"
                 />
 
+            <Button
+                android:id="@+id/btnCsv"
+                android:text="CSV"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
+
+            <Button
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btnPdf"
+                android:text="PDF"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>

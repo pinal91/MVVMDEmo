@@ -14,7 +14,8 @@ object MainActivityRepository {
 
     fun getServicesApiCall(): MutableLiveData<MoviesListModel> {
 
-        val call = RetrofitClient.apiInterface.getServices("08e365d4ae0d7f8918ef7bdc5d9691b7","popularity.desc")
+        val call = RetrofitClient.apiInterface.getServices("08e365d4ae0d7f8918ef7bdc5d9691b7",
+            "popularity.desc")
 
         call.enqueue(object: Callback<MoviesListModel> {
             override fun onFailure(call: Call<MoviesListModel>, t: Throwable) {

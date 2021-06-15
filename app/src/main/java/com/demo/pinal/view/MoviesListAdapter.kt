@@ -1,7 +1,6 @@
 package com.demo.pinal.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ class MoviesListAdapter(private val arrListProductsData: ArrayList<ResultsItem>?
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val metrics = context.resources.displayMetrics
+        context.resources.displayMetrics
 
         val p = arrListProductsData!![position]
 
@@ -44,13 +43,9 @@ class MoviesListAdapter(private val arrListProductsData: ArrayList<ResultsItem>?
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_list, parent, false)
 
-        return ViewHolder(view, parent.context)
+        return ViewHolder(view)
     }
 
-    class ViewHolder(view: View, val activity: Context) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
-
-
-
-    }
+    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
 }
