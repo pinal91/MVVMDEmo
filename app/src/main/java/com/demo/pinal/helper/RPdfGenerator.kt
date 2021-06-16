@@ -20,12 +20,14 @@ import com.itextpdf.layout.property.TextAlignment
 import com.itextpdf.layout.property.UnitValue
 import com.demo.pinal.model.RPdfGeneratorModel
 import com.demo.pinal.model.RTransaction
+import com.demo.pinal.model.ResultsItem
+import com.itextpdf.layout.property.VerticalAlignment
 import java.io.File
 import java.io.FileOutputStream
 
 object RPdfGenerator {
 
-    private val linkSample = "https://github.com/rheyansh/RPdfGenerator"
+   // private val linkSample = "https://github.com/rheyansh/RPdfGenerator"
 
     fun generatePdf(context: Context, info: RPdfGeneratorModel) {
 
@@ -52,14 +54,14 @@ object RPdfGenerator {
 
         //Add sub heading
         val appName = "RPdfGenerator"
-        addSubHeading(layoutDocument, "Generated via: ${appName}")
-        addLink(layoutDocument, linkSample)
+       // addSubHeading(layoutDocument, "Generated via: ${appName}")
+       // addLink(layoutDocument, linkSample)
 
         //add empty line
         addEmptyLine(layoutDocument,1)
 
         // customer reference information
-        addDebitCredit(layoutDocument, info)
+        //addDebitCredit(layoutDocument, info)
 
         //add empty line
         addEmptyLine(layoutDocument,1)
@@ -103,39 +105,36 @@ object RPdfGenerator {
         return dir.path + File.separator
     }
 
-    private fun addTable(layoutDocument: Document, items: List<RTransaction>) {
+    private fun addTable(layoutDocument: Document, items: List<ResultsItem>) {
 
         val table = Table(
             UnitValue.createPointArray(
                 floatArrayOf(
                     100f,
                     180f,
-                    80f,
-                    80f,
-                    80f,
-                    100f
+                    80f
                 )
             )
         )
 
         // headers
         //table.addCell(Paragraph("S.N.O.").setBold())
-        table.addCell(Paragraph("Item").setBold())
-        table.addCell(Paragraph("Customer").setBold())
-        table.addCell(Paragraph("Qty").setBold())
-        table.addCell(Paragraph("Price/Q").setBold())
+        table.addCell(Paragraph("Movi Name").setBold()).setVerticalAlignment(VerticalAlignment.MIDDLE)
+        table.addCell(Paragraph("Rating").setBold())
+        table.addCell(Paragraph("Image Url").setBold())
+        /*table.addCell(Paragraph("Price/Q").setBold())
         table.addCell(Paragraph("Total").setBold())
-        table.addCell(Paragraph("Date").setBold())
+        table.addCell(Paragraph("Date").setBold())*/
 
         // items
         for (a in items) {
 //            table.addCell(Paragraph(a.SNO.toString() + ""))
-            table.addCell(Paragraph(a.itemName + ""))
-            table.addCell(Paragraph(a.custName + ""))
-            table.addCell(Paragraph(a.quantity.toString() + ""))
-            table.addCell(Paragraph(a.pricePerUnit.toString() + ""))
+            table.addCell(Paragraph(a.original_title + ""))
+            table.addCell(Paragraph(a.vote_average + ""))
+            table.addCell(Paragraph(a.poster_path.toString() + ""))
+            /*table.addCell(Paragraph(a.pricePerUnit.toString() + ""))
             table.addCell(Paragraph((a.quantity * a.pricePerUnit).toString() + ""))
-            table.addCell(Paragraph(a.transactionDateStr + ""))
+            table.addCell(Paragraph(a.transactionDateStr + ""))*/
         }
         layoutDocument.add(table)
     }
@@ -146,26 +145,6 @@ object RPdfGenerator {
         }
     }
 
-    private fun addDebitCredit(layoutDocument: Document, info: RPdfGeneratorModel) {
-
-        val table = Table(
-            UnitValue.createPointArray(
-                floatArrayOf(
-                    100f,
-                    160f
-                )
-            )
-        )
-
-        table.addCell(Paragraph("Total Credit").setBold())
-        table.addCell(Paragraph(info.totalCredit + ""))
-        table.addCell(Paragraph("Total Debit").setBold())
-        table.addCell(Paragraph(info.totalDebit + ""))
-        table.addCell(Paragraph("Total Profit").setBold())
-        table.addCell(Paragraph(info.totalProfit + ""))
-
-        layoutDocument.add(table)
-    }
 
     private fun addSubHeading(layoutDocument: Document, text: String) {
         layoutDocument.add(
@@ -174,20 +153,6 @@ object RPdfGenerator {
         )
     }
 
-    private fun addLink(layoutDocument: Document, text: String) {
-
-        val blueText: Text = Text(text)
-            .setFontColor(ColorConstants.BLUE)
-            .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD))
-
-        layoutDocument.add(
-            Paragraph(blueText)
-                .setAction(PdfAction.createURI(text))
-                .setTextAlignment(TextAlignment.CENTER)
-                .setUnderline()
-                .setItalic()
-        )
-    }
 
     private fun addTitle(layoutDocument: Document, text: String) {
         layoutDocument.add(

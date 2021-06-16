@@ -16,7 +16,6 @@ import com.demo.pinal.helper.RPdfGenerator
 import com.demo.pinal.helper.RPermissionHelper
 import com.demo.pinal.model.RPdfGeneratorModel
 import com.demo.pinal.model.RTransaction
-import com.demo.pinal.model.RTransactionType
 import com.demo.pinal.model.ResultsItem
 import com.demo.pinal.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -58,12 +57,13 @@ class MainActivity : AppCompatActivity() {
 
         })
         createPdf(false) //just ask permission for first time
-        dummyInfo = dummyModel()
+
 
         btnCsv.setOnClickListener {
             CreateCsv(data)
         }
         btnPdf.setOnClickListener {
+            dummyInfo = dummyModel()
             createPdf(true)
         }
 
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dummyModel(): RPdfGeneratorModel {
-        val list = dummyTransactions()
+        val list = data
         val header = "MEDICARE"
         val dummy = RPdfGeneratorModel(list, header)
         return dummy
@@ -167,46 +167,11 @@ class MainActivity : AppCompatActivity() {
 
         val list = arrayListOf<RTransaction>()
 
-        val i1 = RTransaction()
-        i1.custName = "Johan Store"
-        i1.itemName = "Snacks"
-        i1.quantity = 4
-        i1.pricePerUnit = 40.0
-        i1.totalPrice = i1.quantity * i1.pricePerUnit
-        i1.transactionDateStr = "10 Sep, 20"
-        i1.transType = RTransactionType.plus
-        list.add(i1)
-
-
-        val i2 = RTransaction()
-        i2.custName = "Alice Store"
-        i2.itemName = "Chocolate"
-        i2.quantity = 3
-        i2.pricePerUnit = 79.0
-        i2.totalPrice = i2.quantity * i2.pricePerUnit
-        i2.transactionDateStr = "9 Sep, 20"
-        i2.transType = RTransactionType.plus
-        list.add(i2)
-
-        val i3 = RTransaction()
-        i3.custName = "Alexa Mall"
-        i3.itemName = "Shoes"
-        i3.quantity = 2
-        i3.pricePerUnit = 177.0
-        i3.totalPrice = i3.quantity * i3.pricePerUnit
-        i3.transactionDateStr = "9 Sep, 20"
-        i3.transType = RTransactionType.minus
-        list.add(i3)
-
-        val i4 = RTransaction()
-        i4.custName = "Zainab Baba"
-        i4.itemName = "Chips"
-        i4.quantity = 5
-        i4.pricePerUnit = 140.0
-        i4.totalPrice = i4.quantity * i4.pricePerUnit
-        i4.transactionDateStr = "8 Sep, 20"
-        i4.transType = RTransactionType.plus
-        list.add(i4)
+        for (i in 0 until data!!.size){
+            list[i].original_title== data!![i].original_title
+            list[i].poster_path== data!![i].poster_path
+            list[i].vote_average== data!![i].vote_average
+        }
 
 
 
