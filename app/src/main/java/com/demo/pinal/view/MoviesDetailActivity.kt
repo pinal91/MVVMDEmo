@@ -19,7 +19,6 @@ class MoviesDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies_detail)
-        id=intent.getStringExtra("id")
 
         mainActivityViewModel = ViewModelProvider(this).get(DetailActivityViewModel::class.java)
 
@@ -40,7 +39,7 @@ class MoviesDetailActivity : AppCompatActivity() {
         txtRating.text=serviceSetterGetter!!.vote_average.toString()
         textDetail.text=serviceSetterGetter!!.overview
         Glide.with(this@MoviesDetailActivity).
-        load("http://image.tmdb.org/t/p/original/" + serviceSetterGetter.poster_path).crossFade()
+        load("http://image.tmdb.org/t/p/original/" + serviceSetterGetter.poster_path)
             .into(imagePoster)
     }
 }

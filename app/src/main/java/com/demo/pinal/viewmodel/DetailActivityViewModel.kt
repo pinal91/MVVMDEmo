@@ -11,7 +11,6 @@ class DetailActivityViewModel : ViewModel() {
     var detailLiveData: MutableLiveData<MovieDetailModel>? = null
 
     fun getDetailData(id: String?): LiveData<MovieDetailModel>? {
-        detailLiveData = DetailActivityRepository.getDetailApiCall(id)
         return detailLiveData
     }
 

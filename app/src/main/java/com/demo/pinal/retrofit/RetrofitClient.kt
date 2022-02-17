@@ -9,9 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    const val MainServer = "https://api.themoviedb.org/3/"
+    const val MainServer = "http://qvr9g.mocklab.io/"
     
-    const val ImageMainServer = "http://image.tmdb.org/t/p/original/";
 
     val retrofitClient: Retrofit.Builder by lazy {
 
