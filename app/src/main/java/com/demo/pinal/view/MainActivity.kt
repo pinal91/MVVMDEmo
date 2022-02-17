@@ -2,15 +2,17 @@ package com.demo.pinal.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.pinal.R
 import com.demo.pinal.databinding.ActivityMainBinding
-import com.demo.pinal.util.DataBindingActivity
 import com.demo.pinal.model.BannerItem
 import com.demo.pinal.model.ProductsItemModel
+import com.demo.pinal.util.DataBindingActivity
 import com.demo.pinal.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -112,6 +114,19 @@ class MainActivity : DataBindingActivity() {
 
             adapterList = ProductListAdapter(it.Data!!.marketList as java.util.ArrayList<ProductsItemModel>, this)
                                 rcyProductList.adapter = adapterList
+
+
+            nestedScrollView.viewTreeObserver
+                .addOnScrollChangedListener {
+                    val view =
+                        nestedScrollView.getChildAt(nestedScrollView.childCount - 1) as View
+                    val diff: Int = view.bottom - (nestedScrollView.height + nestedScrollView
+                        .scrollY)
+                    if (diff == 0) {
+                        mainActivityViewModel.getproduct(it.Data!!.Pagination?.page!!)
+                        Log.d("LAST","PAGE")
+                    }
+                }
         }
         mainActivityViewModel.getproduct("1")
     }

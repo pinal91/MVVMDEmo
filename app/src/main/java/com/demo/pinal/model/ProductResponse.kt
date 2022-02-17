@@ -8,7 +8,7 @@ data class ProductResponse(
 
 data class Pagination(
 	val totalPage: Int? = null,
-	val page: Int? = null,
+	val page: String? = null,
 	val totalCount: Int? = null,
 	val rowsPerPage: Int? = null
 )
