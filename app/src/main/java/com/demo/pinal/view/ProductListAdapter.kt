@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.product_list_item.view.*
 import java.util.*
 
 
-class ProductListAdapter(private val dataList: ArrayList<ProductsItemModel>, private val context: Activity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductListAdapter(private val dataList: MutableList<ProductsItemModel>, private val context: Activity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
 
@@ -120,10 +120,9 @@ class ProductListAdapter(private val dataList: ArrayList<ProductsItemModel>, pri
     }
 
     private inner class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var progressBar: ProgressBar
+        var progressBar: ProgressBar = view.loading
 
         init {
-            progressBar = view.loading
 
             val paramView = view.layoutParams as RecyclerView.LayoutParams
             paramView.width = Math.round(loadingWidth.toFloat())
@@ -139,16 +138,14 @@ class ProductListAdapter(private val dataList: ArrayList<ProductsItemModel>, pri
         }
     }
 
-    fun add(mc: ProductsItemModel) {
+    private fun add(mc: ProductsItemModel) {
         dataList.add(mc)
         notifyItemInserted(dataList.size - 1)
     }
 
-    fun addAll(mcList: ArrayList<ProductsItemModel>) {
-
-        for (mc in ArrayList<ProductsItemModel>(mcList)) {
-            add(mc)
-        }
+    fun addAll(mcList: MutableList<ProductsItemModel>) {
+        dataList.addAll(mcList)
+        notifyDataSetChanged()
     }
 
     fun remove(city: ProductsItemModel) {

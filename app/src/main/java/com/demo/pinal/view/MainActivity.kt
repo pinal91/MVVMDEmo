@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +25,13 @@ class MainActivity : DataBindingActivity() {
     private var isGenerating = false
     lateinit var mainActivityViewModel: MainActivityViewModel
     var data: ArrayList<BannerItem>? = null
+    private var products:MutableList<ProductsItemModel>? = arrayListOf()
+    private var currentPage:Int = 1
+    private var totalPage:Int = 0
+    private var totalCount:Int=0
     private val mBinding: ActivityMainBinding by binding(R.layout.activity_main)
+    private var isLastPage:Boolean=false
+    private var isLoading:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding.apply {
@@ -112,23 +118,51 @@ class MainActivity : DataBindingActivity() {
 
         mainActivityViewModel.servicesProductData?.observe(this) {
 
-            adapterList = ProductListAdapter(it.Data!!.marketList as java.util.ArrayList<ProductsItemModel>, this)
-                                rcyProductList.adapter = adapterList
+
+            products= it.Data!!.marketList
+            totalPage= it.Data!!.Pagination!!.totalPage!!
+            totalCount=it.Data!!.Pagination!!.totalCount!!
+            currentPage=it.Data!!.Pagination!!.page!!+1
+            products?.let { it1 -> adapterList!!.addAll(it1) }
+       }
 
 
-            nestedScrollView.viewTreeObserver
-                .addOnScrollChangedListener {
-                    val view =
-                        nestedScrollView.getChildAt(nestedScrollView.childCount - 1) as View
-                    val diff: Int = view.bottom - (nestedScrollView.height + nestedScrollView
-                        .scrollY)
-                    if (diff == 0) {
-                        mainActivityViewModel.getproduct(it.Data!!.Pagination?.page!!)
-                        Log.d("LAST","PAGE")
-                    }
+        adapterList = products?.let { ProductListAdapter(it, this) }
+        rcyProductList.adapter = adapterList
+
+        if (nestedScrollView != null) {
+
+            nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                val TAG = "nested_sync"
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN")
+
                 }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP")
+                    relbottomView.visibility=View.GONE
+                }
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL")
+                }
+                if (scrollY == v.getChildAt(0)
+                        .measuredHeight - v.measuredHeight
+                ) {
+
+                    Log.i(TAG, "BOTTOM SCROLL")
+                    isLastPage=totalPage+1==currentPage
+
+                    if (!isLastPage) {
+                        relbottomView.visibility=View.VISIBLE
+                        isLoading=true
+                        mainActivityViewModel.getproduct(currentPage.toString())
+
+                    }
+
+                }
+            })
         }
-        mainActivityViewModel.getproduct("1")
+        mainActivityViewModel.getproduct(currentPage.toString())
     }
 
 

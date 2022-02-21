@@ -8,7 +8,7 @@ data class ProductResponse(
 
 data class Pagination(
 	val totalPage: Int? = null,
-	val page: String? = null,
+	val page: Int? = null,
 	val totalCount: Int? = null,
 	val rowsPerPage: Int? = null
 )
@@ -26,6 +26,6 @@ data class ProductsItemModel(
 
 data class ProductData(
 	val Pagination: Pagination? = null,
-	val marketList: List<ProductsItemModel?>? = null
+	val marketList: MutableList<ProductsItemModel>? = null
 )
 

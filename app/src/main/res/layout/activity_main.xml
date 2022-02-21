@@ -229,6 +229,24 @@
                         />
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relbottomView"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/loading"
+                        android:layout_width="match_parent"
+                        android:indeterminateTint="@android:color/holo_red_dark"
+                        android:layout_height="@dimen/_40sdp" />
+                </RelativeLayout>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
